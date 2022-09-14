@@ -55,7 +55,7 @@ Last Updated: September 13, 2022
 ##### Beta Features
 1. Read and respond to messages sent in discord server 😎
 2. Bot can join and leave a discord VC 😎
-2. Play mp3 files inside of discord VC
+2. Play mp3 files inside of discord VC 😎
 
 ##### Alpha Features
 1. Download videos from youtube

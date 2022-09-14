@@ -1,9 +1,11 @@
 import discord
 from discord.ext import commands
 
+
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='~', intents=intents)
+
 
 @bot.command()
 async def hello(ctx):
@@ -30,3 +32,21 @@ async def leave(ctx):
 
     else: 
         await ctx.send(f"{bot.user.name} isn't inside of a voice channel right now")
+
+
+# @bot.command()
+# async def add(ctx, video_link, name):
+#     # Adds song to the hard_bass_library
+    
+#     # Download the video as an mp3
+#     # Add the video's audio to the hard_bass_library
+#     # -> Bot will have to check for audio files with the same names
+    
+#     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+#     await voice.play(discord.FFmpegPCMAudio(executable=constants.FFMPEG_PATH, source=constants.AUDIO_FILE_PATH))
+
+
+@bot.command()
+async def play(ctx, name):
+    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+    voice.play(discord.FFmpegPCMAudio(executable="ffmpeg\\ffmpeg.exe", source=f"hard_bass_library\\{name}"))
