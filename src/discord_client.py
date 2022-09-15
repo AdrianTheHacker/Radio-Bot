@@ -1,5 +1,9 @@
+from turtle import down
 import discord
 from discord.ext import commands
+
+from audio_grabber import download_song
+from constants import FFMPEG_PATH, AUDIO_LIBRARY_PATH, DEFAULT_VOICE_CHANNEL
 
 
 intents = discord.Intents.default()
@@ -13,7 +17,7 @@ async def hello(ctx):
 
 
 @bot.command()
-async def join(ctx, voice_channel="Gentlemen's Club"):
+async def join(ctx, voice_channel=DEFAULT_VOICE_CHANNEL):
     # TODO 
     # -> Allow bot to join different voice channels without having to run ~leave
     # -> Fix bug with bot crashing after running ~join when bot is already inside of a voice channel
@@ -34,19 +38,22 @@ async def leave(ctx):
         await ctx.send(f"{bot.user.name} isn't inside of a voice channel right now")
 
 
-# @bot.command()
-# async def add(ctx, video_link, name):
-#     # Adds song to the hard_bass_library
+@bot.command()
+async def add(ctx, video_link, song_name):
+    # Adds song to the hard_bass_library
     
-#     # Download the video as an mp3
-#     # Add the video's audio to the hard_bass_library
-#     # -> Bot will have to check for audio files with the same names
+    # Download the video as an mp3
+    # Add the video's audio to the hard_bass_library
+    # -> Bot will have to check for audio files with the same names
     
-#     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-#     await voice.play(discord.FFmpegPCMAudio(executable=constants.FFMPEG_PATH, source=constants.AUDIO_FILE_PATH))
+    await ctx.send(f"Downloading '{video_link}' and saving it to the audio library as '{song_name}'")
+    download_song(video_link, song_name)
+    await ctx.send(f"Download Complete!\nRun Command: ~play 'Prison - System of a Down'")
 
 
 @bot.command()
-async def play(ctx, name):
+async def play(ctx, song_name):
+    await ctx.send(f"Now Playing: {song_name}")
+
     voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-    voice.play(discord.FFmpegPCMAudio(executable="ffmpeg\\ffmpeg.exe", source=f"hard_bass_library\\{name}"))
+    voice.play(discord.FFmpegPCMAudio(executable=FFMPEG_PATH, source=f"{AUDIO_LIBRARY_PATH}{song_name}.mp3"))

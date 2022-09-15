@@ -1,6 +1,6 @@
 # Project Specific Files / Directories
 ffmpeg/*
-hard_bass_library/*
+audio_library/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
